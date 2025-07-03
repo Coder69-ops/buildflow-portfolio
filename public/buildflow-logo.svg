@@ -1,0 +1,16 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#f8fafc"/>
+  
+  <!-- Flow waves -->
+  <path d="M200 80 Q220 100 240 120 Q260 140 280 160 Q300 180 320 200 Q300 220 280 240 Q260 260 240 280 Q220 300 200 320" 
+        stroke="#1e3a8a" stroke-width="8" fill="none"/>
+  <path d="M180 100 Q200 120 220 140 Q240 160 260 180 Q280 200 300 220 Q280 240 260 260 Q240 280 220 300 Q200 320 180 340" 
+        stroke="#3b82f6" stroke-width="8" fill="none"/>
+  <path d="M160 120 Q180 140 200 160 Q220 180 240 200 Q260 220 280 240 Q260 260 240 280 Q220 300 200 320 Q180 340 160 360" 
+        stroke="#60a5fa" stroke-width="8" fill="none"/>
+  
+  <!-- Text -->
+  <text x="200" y="280" text-anchor="middle" font-family="Inter, sans-serif" font-size="32" font-weight="700" fill="#1e3a8a">Build</text>
+  <text x="200" y="320" text-anchor="middle" font-family="Inter, sans-serif" font-size="32" font-weight="700" fill="#3b82f6">Flow</text>
+</svg>
