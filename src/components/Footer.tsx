@@ -56,21 +56,21 @@ const Footer: React.FC = () => {
   }
 
   return (
-    <footer className="bg-gray-900 text-white relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-primary-900/20"></div>
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary-500 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-accent-500 rounded-full filter blur-3xl"></div>
+    <footer className="bg-slate-950 text-white relative overflow-hidden">
+      {/* Animated Background Effects */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-900/30"></div>
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-500 rounded-full filter blur-3xl"></div>
       </div>
       
       {/* Back to Top Button */}
       <button
         onClick={scrollToTop}
-        className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 text-white w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110 z-20"
+        className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110 z-30 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-950"
         aria-label="Back to top"
       >
-        <ArrowUp size={20} />
+        <ArrowUp size={20} aria-hidden="true" />
       </button>
 
       <div className="container pt-16 pb-8 relative z-10">
@@ -81,7 +81,7 @@ const Footer: React.FC = () => {
             <div className="mb-6">
               <div className="flex items-center space-x-3 mb-4 group">
                 <BuildFlowLogo width={40} height={40} className="group-hover:scale-110 transition-transform duration-300" />
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-white to-primary-300 bg-clip-text text-transparent">BuildFlow</h3>
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-white to-blue-300 bg-clip-text text-transparent">BuildFlow</h3>
               </div>
               <p className="text-gray-300 max-w-md leading-relaxed hover:text-gray-200 transition-colors duration-300">
                 Building exceptional digital experiences through innovative web development, 
@@ -93,19 +93,19 @@ const Footer: React.FC = () => {
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-gray-300 group">
-                <Mail size={16} className="group-hover:text-primary-400 transition-colors duration-300" />
-                <a href="mailto:contact@buildflow.dev" className="hover:text-primary-400 transition-colors duration-300">
+                <Mail size={16} className="group-hover:text-blue-400 transition-colors duration-300" />
+                <a href="mailto:contact@buildflow.dev" className="hover:text-blue-400 transition-colors duration-300">
                   contact@buildflow.dev
                 </a>
               </div>
               <div className="flex items-center space-x-3 text-gray-300 group">
-                <Phone size={16} className="group-hover:text-primary-400 transition-colors duration-300" />
-                <a href="tel:+15551234567" className="hover:text-primary-400 transition-colors duration-300">
+                <Phone size={16} className="group-hover:text-blue-400 transition-colors duration-300" />
+                <a href="tel:+15551234567" className="hover:text-blue-400 transition-colors duration-300">
                   +1 (555) 123-4567
                 </a>
               </div>
               <div className="flex items-center space-x-3 text-gray-300 group">
-                <MapPin size={16} className="group-hover:text-primary-400 transition-colors duration-300" />
+                <MapPin size={16} className="group-hover:text-blue-400 transition-colors duration-300" />
                 <span className="group-hover:text-gray-200 transition-colors duration-300">San Francisco, CA</span>
               </div>
             </div>
@@ -119,7 +119,7 @@ const Footer: React.FC = () => {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-gray-300 hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block"
+                    className="text-gray-300 hover:text-blue-400 transition-all duration-300 hover:translate-x-1 inline-block"
                   >
                     {link.label}
                   </a>
@@ -136,7 +136,7 @@ const Footer: React.FC = () => {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-gray-300 hover:text-primary-400 transition-all duration-300 hover:translate-x-1 inline-block"
+                    className="text-gray-300 hover:text-blue-400 transition-all duration-300 hover:translate-x-1 inline-block"
                   >
                     {link.label}
                   </a>
@@ -151,9 +151,9 @@ const Footer: React.FC = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1 px-3 py-2 bg-gray-800/50 border border-gray-700 rounded-l-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary-500 text-sm transition-all duration-300 focus:bg-gray-800"
+                  className="flex-1 px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-l-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 text-sm transition-all duration-300 focus:bg-slate-800"
                 />
-                <button className="bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 px-4 py-2 rounded-r-lg transition-all duration-300 hover:scale-105">
+                <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-4 py-2 rounded-r-lg transition-all duration-300 hover:scale-105 text-white">
                   <Mail size={16} />
                 </button>
               </div>
@@ -162,7 +162,7 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-800/50 pt-8">
+        <div className="border-t border-slate-800/50 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             {/* Copyright */}
             <div className="text-gray-400 text-sm flex items-center group">
@@ -190,7 +190,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Additional Info */}
-          <div className="mt-6 pt-6 border-t border-gray-800/50">
+          <div className="mt-6 pt-6 border-t border-slate-800/50">
             <div className="text-center text-gray-400 text-xs">
               <p className="mb-2 hover:text-gray-300 transition-colors duration-300">
                 This website showcases web development capabilities and ready-made solutions. 

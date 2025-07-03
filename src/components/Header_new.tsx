@@ -52,9 +52,8 @@ const Header: React.FC = () => {
             <div className="md:hidden">
               <button
                 onClick={toggleMobileMenu}
-                className="text-gray-700 dark:text-gray-300 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-950"
-                aria-label={isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"}
-                aria-expanded={isMobileMenuOpen}
+                className="text-gray-700 dark:text-gray-300 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                aria-label="Toggle mobile menu"
               >
                 <div className="w-6 h-6 relative">
                   <span className={cn(

@@ -5,9 +5,32 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --theme-transition: colors 0.2s ease-in-out;
+  }
+
   html {
     scroll-behavior: smooth;
     font-size: 16px;
+  }
+  
+  /* Prevent FOUC (Flash of Unstyled Content) in dark mode */
+  html.dark {
+    color-scheme: dark;
+  }
+  
+  html.light {
+    color-scheme: light;
+  }
+  
+  /* Consistent theme transitions for all elements */
+  *, *::before, *::after {
+    transition: var(--theme-transition);
+  }
+  
+  /* Disable transitions during theme change for instant switching */
+  .theme-changing *, .theme-changing *::before, .theme-changing *::after {
+    transition: none !important;
   }
   
   body {
@@ -18,11 +41,12 @@
     background: radial-gradient(ellipse at top, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
     background-attachment: fixed;
     line-height: 1.6;
-    transition: background 0.3s ease;
+    transition: var(--theme-transition);
   }
 
   .dark body {
     background: radial-gradient(ellipse at top, #0f172a 0%, #1e293b 50%, #334155 100%);
+    background-attachment: fixed;
   }
 
   /* Custom scrollbar */
@@ -58,80 +82,20 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-r from-primary-600 via-primary-700 to-primary-800 hover:from-primary-700 hover:via-primary-800 hover:to-primary-900 text-white font-bold py-4 px-10 rounded-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 focus:outline-none focus:ring-4 focus:ring-primary-300/50 shadow-xl hover:shadow-2xl relative overflow-hidden;
-    background-size: 300% 300%;
-    animation: gradientShift 4s ease infinite;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.7s;
-  }
-  
-  .btn-primary:hover::before {
-    left: 100%;
+    @apply bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg hover:shadow-xl;
   }
   
   .btn-secondary {
-    @apply bg-white/90 border-2 border-primary-600/30 text-primary-700 hover:bg-primary-600 hover:text-white font-bold py-4 px-10 rounded-2xl transition-all duration-500 focus:outline-none focus:ring-4 focus:ring-primary-300/50 shadow-xl hover:shadow-2xl backdrop-blur-md relative overflow-hidden transform hover:scale-105 hover:-translate-y-2;
-    border: 2px solid transparent;
-    background-clip: padding-box;
-  }
-  
-  .btn-secondary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 2px;
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-    border-radius: inherit;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: xor;
-    z-index: -1;
+    @apply bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium py-3 px-8 rounded-xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-md hover:shadow-lg;
   }
   
   .card {
-    @apply bg-white/90 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:-translate-y-3 hover:rotate-1 border border-white/30 relative overflow-hidden;
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200 border border-gray-200/50 dark:border-gray-700/50;
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
   }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
-    transition: left 0.8s ease;
-  }
-
-  .card:hover::before {
-    left: 100%;
-  }
   
-  .card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3));
-    border-radius: inherit;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: xor;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-  
-  .card:hover::after {
-    opacity: 1;
+  .dark .card {
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.95), rgba(30, 41, 59, 0.85));
   }
   
   .section-padding {
@@ -140,6 +104,29 @@
   
   .container {
     @apply max-w-7xl mx-auto;
+  }
+
+  /* Dark mode section background */
+  .section-bg {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  }
+
+  /* Enhanced dark glass effect */
+  .dark-glass {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.3), rgba(30, 41, 59, 0.1));
+    backdrop-filter: blur(25px) saturate(200%);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Dark gradient text */
+  .dark-gradient-text {
+    background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6, #06b6d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
   }
 
   /* Enhanced line clamp utility */
@@ -168,6 +155,18 @@
   /* Enhanced gradient text with multiple animations */
   .text-gradient-animated {
     @apply bg-gradient-to-r from-primary-600 via-accent-600 to-primary-600 bg-clip-text text-transparent;
+    background-size: 300% auto;
+    animation: gradientText 6s ease-in-out infinite;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+  }
+
+  /* Enhanced gradient text for dark mode */
+  .text-gradient-animated-dark {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4, #10b981, #6366f1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     background-size: 300% auto;
     animation: gradientText 6s ease-in-out infinite;
     font-weight: 800;
@@ -247,6 +246,30 @@
     animation: gradientShift 8s ease infinite;
   }
   
+  .text-gradient-vibrant-dark {
+    background: linear-gradient(135deg, #60a5fa, #a78bfa, #06b6d4, #10b981);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+  }
+  
+  .text-gradient-animated-dark {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4, #10b981, #6366f1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% auto;
+    animation: gradientText 6s ease-in-out infinite;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+  }
+  
+  .animate-scroll-infinite {
+    animation: scroll-infinite 30s linear infinite;
+  }
+  
   .bg-gradient-primary {
     background: 
       radial-gradient(ellipse at top, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
@@ -322,6 +345,39 @@
     @apply outline-none ring-4 ring-primary-300 ring-offset-2;
   }
   
+  /* Better focus for dark mode */
+  .dark .focus-visible,
+  .dark *:focus-visible {
+    @apply ring-blue-400/60 ring-offset-gray-900;
+  }
+  
+  /* Consistent focus states for all interactive elements */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [tabindex]:focus-visible {
+    @apply outline-none ring-4 ring-primary-300/50 ring-offset-2 ring-offset-white;
+    border-radius: 8px;
+  }
+  
+  .dark a:focus-visible,
+  .dark button:focus-visible,
+  .dark input:focus-visible,
+  .dark textarea:focus-visible,
+  .dark select:focus-visible,
+  .dark [tabindex]:focus-visible {
+    @apply ring-blue-400/60 ring-offset-gray-900;
+  }
+  
+  /* Skip link for keyboard navigation */
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50;
+    @apply bg-primary-600 text-white px-4 py-2 rounded-lg;
+    @apply focus:ring-4 focus:ring-primary-300/50;
+  }
+  
   /* Advanced backdrop filters */
   .backdrop-blur-3xl {
     backdrop-filter: blur(64px);
@@ -338,6 +394,83 @@
   
   .shadow-inner-glow {
     box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.2);
+  }
+}
+
+/* Performance optimizations for lower-end devices */
+@layer base {
+  /* Reduce blur effects for better performance */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-scroll-infinite,
+    .animate-pulse-glow,
+    .animate-bounce-gentle,
+    .float,
+    .float-delayed,
+    .float-slow {
+      animation: none !important;
+    }
+    
+    .blur-3xl {
+      filter: blur(8px);
+    }
+    
+    .backdrop-blur-xl {
+      backdrop-filter: blur(4px);
+    }
+    
+    .backdrop-blur-md {
+      backdrop-filter: blur(2px);
+    }
+  }
+  
+  /* Optimize for low-end devices */
+  @media (max-width: 768px) {
+    .blur-3xl {
+      filter: blur(16px);
+    }
+    
+    .backdrop-blur-xl {
+      backdrop-filter: blur(8px);
+    }
+    
+    .backdrop-blur-md {
+      backdrop-filter: blur(4px);
+    }
+    
+    /* Reduce shadow complexity on mobile */
+    .hover-glow:hover {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+      transform: translateY(-1px);
+    }
+  }
+  
+  /* Reduce expensive animations in dark mode for better performance */
+  .dark * {
+    will-change: auto !important;
+  }
+  
+  /* Optimize background attachments */
+  .dark body {
+    background-attachment: scroll;
+  }
+}
+
+/* Simplified hover effects for better performance */
+@layer utilities {
+  .hover-lift {
+    transition: transform 0.2s ease;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+  
+  .hover-scale {
+    transition: transform 0.2s ease;
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.02);
   }
 }
 
@@ -531,6 +664,15 @@
   100% { left: 100%; }
 }
 
+@keyframes scroll-infinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 /* Enhanced text effects */
 .text-shadow-sm {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -646,12 +788,7 @@ html {
   }
 
   .dark .bg-gradient-mesh {
-    background: 
-      radial-gradient(circle at 15% 85%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
-      radial-gradient(circle at 85% 15%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
-      radial-gradient(circle at 45% 45%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-      linear-gradient(135deg, #0f172a, #1e293b);
+    background: #020617; /* Pure slate-950 to match Lamp component exactly */
   }
   
   .dark .bg-gradient-card {
@@ -765,10 +902,130 @@ html {
   }
   
   .dark-glow-blue {
-    box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.3), 0 0 60px rgba(59, 130, 246, 0.1);
+  }
+
+  .dark-glow-purple {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.3), 0 0 60px rgba(139, 92, 246, 0.1);
+  }
+
+  /* Enhanced card transforms */
+  .card-lift {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .card-lift:hover {
+    transform: translateY(-8px) rotateX(5deg) rotateY(2deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  .dark .card-lift:hover {
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+  }
+
+  /* Enhanced glass morphism effects */
+  .glass-enhanced {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    backdrop-filter: blur(30px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.4);
+  }
+
+  .dark .glass-enhanced {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(30, 41, 59, 0.2));
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  }
+}  /* Performance optimizations for smooth scrolling */
+  * {
+    box-sizing: border-box;
   }
   
-  .dark-glow-purple {
-    box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+  /* Force hardware acceleration for smoother animations */
+  .group,
+  [class*="hover:"],
+  [class*="transition"],
+  [class*="transform"] {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
   }
-}
+  
+  /* Optimize images for better performance */
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+  }
+  
+  /* Prevent layout shifts */
+  .container {
+    contain: layout style;
+  }
+  
+  /* Optimize scrolling performance */
+  body {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    will-change: scroll-position;
+  }
+  
+  /* GPU acceleration for animations */
+  @keyframes scroll-infinite {
+    from {
+      transform: translateX(0) translateZ(0);
+    }
+    to {
+      transform: translateX(-50%) translateZ(0);
+    }
+  }
+  
+  .animate-scroll-infinite {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+  
+  /* Reduced motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    
+    .animate-scroll-infinite {
+      animation: none !important;
+    }
+    
+    body {
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  /* High contrast mode improvements */
+  @media (prefers-contrast: high) {
+    .bg-white\/95 {
+      background-color: rgb(255 255 255) !important;
+    }
+    
+    .dark .bg-gray-800\/95 {
+      background-color: rgb(31 41 55) !important;
+    }
+  }
+  
+  /* Optimize for low-end devices */
+  @media (max-width: 768px) {
+    .blur-3xl,
+    .blur-2xl,
+    .blur-xl {
+      filter: blur(8px) !important;
+    }
+    
+    .backdrop-blur-md,
+    .backdrop-blur-lg {
+      backdrop-filter: blur(4px) !important;
+    }
+  }

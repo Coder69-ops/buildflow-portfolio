@@ -37,6 +37,10 @@ export function ThemeProvider({
   useEffect(() => {
     const root = window.document.documentElement
 
+    // Add class to disable transitions during theme change
+    root.classList.add('theme-changing')
+    
+    // Clear existing classes to prevent conflicts
     root.classList.remove('light', 'dark')
 
     if (theme === 'system') {
@@ -47,11 +51,21 @@ export function ThemeProvider({
 
       root.classList.add(systemTheme)
       setIsDark(systemTheme === 'dark')
-      return
+    } else {
+      root.classList.add(theme)
+      setIsDark(theme === 'dark')
     }
-
-    root.classList.add(theme)
-    setIsDark(theme === 'dark')
+    
+    // Set color scheme for browser native elements
+    root.style.colorScheme = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'
+    
+    // Force synchronous layout and painting
+    void root.offsetHeight
+    
+    // Remove the theme-changing class to re-enable transitions
+    requestAnimationFrame(() => {
+      root.classList.remove('theme-changing')
+    })
   }, [theme])
 
   const value = {

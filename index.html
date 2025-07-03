@@ -6,9 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="BuildFlow - Professional web development and ready-made website marketplace. Custom web solutions, modern design, and seamless user flows that convert." />
     <meta name="keywords" content="web development, buildflow, ready-made websites, custom web design, React, TypeScript, modern websites, user flows" />
+    <meta name="author" content="BuildFlow" />
+    <meta name="theme-color" content="#3b82f6" />
+    <meta property="og:title" content="BuildFlow - Building Digital Experiences That Flow" />
+    <meta property="og:description" content="Professional web development and ready-made website marketplace with modern design and seamless user flows." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/logo.png" />
+    
+    <!-- Critical resource hints for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://ik.imagekit.io" />
+    <link rel="dns-prefetch" href="https://placehold.co" />
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@300;400;500;600;700;800&display=swap" /></noscript>
+    
     <title>BuildFlow - Building Digital Experiences That Flow</title>
+    
+    <!-- Prevent FOUC (Flash of Unstyled Content) for dark mode -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('buildflow-ui-theme') || 'light';
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const actualTheme = theme === 'system' ? systemTheme : theme;
+        
+        // Add theme-changing class to prevent transitions during initial load
+        document.documentElement.classList.add('theme-changing');
+        
+        if (actualTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        } else {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+        
+        // Set color scheme immediately
+        document.documentElement.style.colorScheme = actualTheme;
+        
+        // Remove theme-changing class after DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+          requestAnimationFrame(function() {
+            document.documentElement.classList.remove('theme-changing');
+          });
+        });
+      })();
+    </script>
   </head>
   <body>
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
