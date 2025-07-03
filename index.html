@@ -28,7 +28,7 @@
     <!-- Prevent FOUC (Flash of Unstyled Content) for dark mode -->
     <script>
       (function() {
-        const theme = localStorage.getItem('buildflow-ui-theme') || 'light';
+        const theme = localStorage.getItem('buildflow-ui-theme') || 'dark';
         const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         const actualTheme = theme === 'system' ? systemTheme : theme;
         

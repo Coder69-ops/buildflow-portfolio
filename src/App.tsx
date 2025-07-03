@@ -73,7 +73,7 @@ function AppContent() {
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="buildflow-ui-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="buildflow-ui-theme">
       <AppContent />
     </ThemeProvider>
   )
