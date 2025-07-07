@@ -22,3 +22,18 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
+
+# Firebase and sensitive files
+ServiceAccountKey.json
+firebase-adminsdk-*.json
+firebase-debug.log
+.firebase/
+.firebaserc
+firebase.json
+firestore.rules
+firestore.indexes.json
+.env
+.env.local
+.env.production

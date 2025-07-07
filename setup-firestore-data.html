@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Sample Data to Firestore</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        .success {
+            color: #059669;
+            background: #ecfdf5;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        .error {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        .info {
+            color: #0369a1;
+            background: #f0f9ff;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        .progress {
+            margin: 10px 0;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .template-card {
+            border: 1px solid #e5e7eb;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f9fafb;
+        }
+        .template-card h4 {
+            margin: 0 0 10px 0;
+            color: #1f2937;
+        }
+        .template-card p {
+            margin: 5px 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        .template-card .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #059669;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Add Sample Data to Firestore</h1>
+        <p>This tool will add sample template data to your Firestore database.</p>
+        
+        <div class="controls">
+            <button onclick="addSampleData()" id="addBtn">Add Sample Templates</button>
+            <button onclick="clearData()" id="clearBtn" style="background: #dc2626;">Clear All Templates</button>
+            <button onclick="checkData()" id="checkBtn" style="background: #059669;">Check Current Data</button>
+        </div>
+
+        <div id="status"></div>
+
+        <div class="progress">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <div id="progressText">Ready to add sample data</div>
+        </div>
+
+        <div id="templates" class="template-grid"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, Timestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGTjOIocYo1iOVkoIKlaEsGdofxP84DMw",
+            authDomain: "buildflow-dev.firebaseapp.com",
+            projectId: "buildflow-dev",
+            storageBucket: "buildflow-dev.firebasestorage.app",
+            messagingSenderId: "28512648478",
+            appId: "1:28512648478:web:edd4d04106e07a382b1d0f"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Sample templates data
+        const sampleTemplates = [
+            {
+                name: 'E-commerce Store',
+                category: 'E-commerce',
+                description: 'Modern e-commerce template with cart functionality, product pages, and checkout flow. Perfect for online stores and marketplaces.',
+                imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop',
+                price: 49,
+                tags: ['react', 'tailwind', 'stripe', 'responsive', 'ecommerce'],
+                features: ['Shopping Cart', 'Product Pages', 'Checkout Flow', 'Admin Dashboard', 'Mobile Responsive', 'Payment Integration'],
+                demoUrl: 'https://demo.buildflow.com/ecommerce',
+                rating: 4.8,
+                reviews: 127,
+                isPopular: true,
+                isFeatured: true
+            },
+            {
+                name: 'Portfolio Website',
+                category: 'Portfolio',
+                description: 'Clean and modern portfolio template for creatives, designers, and developers. Showcase your work professionally.',
+                imageUrl: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=400&h=300&fit=crop',
+                price: 29,
+                tags: ['react', 'portfolio', 'animations', 'dark-mode', 'responsive'],
+                features: ['Dark Mode', 'Smooth Animations', 'Contact Form', 'Project Gallery', 'Resume Download', 'SEO Optimized'],
+                demoUrl: 'https://demo.buildflow.com/portfolio',
+                rating: 4.9,
+                reviews: 89,
+                isPopular: false,
+                isFeatured: false
+            },
+            {
+                name: 'Restaurant Website',
+                category: 'Business',
+                description: 'Beautiful restaurant website with menu display, online reservations, and food ordering system.',
+                imageUrl: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop',
+                price: 39,
+                tags: ['react', 'restaurant', 'menu', 'reservations', 'food'],
+                features: ['Menu Display', 'Online Reservations', 'Photo Gallery', 'Contact Info', 'Mobile Optimized', 'Social Media Integration'],
+                demoUrl: 'https://demo.buildflow.com/restaurant',
+                rating: 4.7,
+                reviews: 156,
+                isPopular: true,
+                isFeatured: false
+            },
+            {
+                name: 'SaaS Landing Page',
+                category: 'SaaS',
+                description: 'High-converting SaaS landing page with pricing tables, feature showcase, and customer testimonials.',
+                imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop',
+                price: 59,
+                tags: ['react', 'saas', 'landing', 'conversion', 'business'],
+                features: ['Pricing Tables', 'Feature Showcase', 'Customer Testimonials', 'FAQ Section', 'CTA Buttons', 'Analytics Ready'],
+                demoUrl: 'https://demo.buildflow.com/saas',
+                rating: 4.6,
+                reviews: 203,
+                isPopular: false,
+                isFeatured: true
+            },
+            {
+                name: 'Real Estate Platform',
+                category: 'Real Estate',
+                description: 'Complete real estate platform with property listings, advanced search, and agent management system.',
+                imageUrl: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop',
+                price: 79,
+                tags: ['react', 'real-estate', 'search', 'maps', 'listings'],
+                features: ['Property Search', 'Map Integration', 'Agent Profiles', 'Mortgage Calculator', 'Saved Searches', 'Virtual Tours'],
+                demoUrl: 'https://demo.buildflow.com/realestate',
+                rating: 4.5,
+                reviews: 94,
+                isPopular: true,
+                isFeatured: false
+            },
+            {
+                name: 'Blog & Magazine',
+                category: 'Blog',
+                description: 'Modern blog and magazine template with article management, social features, and newsletter integration.',
+                imageUrl: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=300&fit=crop',
+                price: 34,
+                tags: ['react', 'blog', 'cms', 'social', 'content'],
+                features: ['Article Management', 'Social Sharing', 'Comment System', 'Newsletter', 'Search Functionality', 'Author Profiles'],
+                demoUrl: 'https://demo.buildflow.com/blog',
+                rating: 4.4,
+                reviews: 67,
+                isPopular: false,
+                isFeatured: false
+            },
+            {
+                name: 'Corporate Website',
+                category: 'Business',
+                description: 'Professional corporate website template with team showcase, services, and client testimonials.',
+                imageUrl: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop',
+                price: 44,
+                tags: ['react', 'corporate', 'business', 'professional', 'services'],
+                features: ['Team Showcase', 'Services Pages', 'Client Testimonials', 'Contact Forms', 'Multi-language Support', 'SEO Ready'],
+                demoUrl: 'https://demo.buildflow.com/corporate',
+                rating: 4.6,
+                reviews: 112,
+                isPopular: false,
+                isFeatured: true
+            },
+            {
+                name: 'Fitness & Gym',
+                category: 'Health',
+                description: 'Dynamic fitness and gym website with class schedules, trainer profiles, and membership management.',
+                imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
+                price: 42,
+                tags: ['react', 'fitness', 'gym', 'health', 'booking'],
+                features: ['Class Schedules', 'Trainer Profiles', 'Membership Plans', 'Online Booking', 'Progress Tracking', 'Mobile App Ready'],
+                demoUrl: 'https://demo.buildflow.com/fitness',
+                rating: 4.7,
+                reviews: 85,
+                isPopular: true,
+                isFeatured: false
+            }
+        ];
+
+        // Add sample data
+        window.addSampleData = async () => {
+            const addBtn = document.getElementById('addBtn');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const status = document.getElementById('status');
+            
+            addBtn.disabled = true;
+            addBtn.textContent = 'Adding Templates...';
+            
+            try {
+                const templatesCollection = collection(db, 'templates');
+                
+                status.innerHTML = '<div class="info">Starting to add sample templates...</div>';
+                
+                for (let i = 0; i < sampleTemplates.length; i++) {
+                    const template = sampleTemplates[i];
+                    
+                    // Add timestamps
+                    const templateWithTimestamps = {
+                        ...template,
+                        createdAt: Timestamp.now(),
+                        updatedAt: Timestamp.now()
+                    };
+                    
+                    const docRef = await addDoc(templatesCollection, templateWithTimestamps);
+                    
+                    // Update progress
+                    const progress = ((i + 1) / sampleTemplates.length) * 100;
+                    progressFill.style.width = progress + '%';
+                    progressText.textContent = `Added "${template.name}" (${i + 1} of ${sampleTemplates.length})`;
+                    
+                    console.log(`Added template: ${template.name} with ID: ${docRef.id}`);
+                }
+                
+                status.innerHTML = '<div class="success">🎉 Successfully added ' + sampleTemplates.length + ' sample templates to Firestore!</div>';
+                addBtn.textContent = 'Sample Data Added Successfully!';
+                progressText.textContent = 'All sample templates added successfully!';
+                
+                // Auto-check data after adding
+                setTimeout(() => {
+                    checkData();
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Error adding sample data:', error);
+                status.innerHTML = '<div class="error">❌ Error adding sample data: ' + error.message + '</div>';
+                addBtn.disabled = false;
+                addBtn.textContent = 'Add Sample Templates';
+                progressText.textContent = 'Error adding sample data';
+            }
+        };
+
+        // Clear all data
+        window.clearData = async () => {
+            const clearBtn = document.getElementById('clearBtn');
+            const status = document.getElementById('status');
+            
+            if (!confirm('Are you sure you want to delete ALL templates? This action cannot be undone.')) {
+                return;
+            }
+            
+            clearBtn.disabled = true;
+            clearBtn.textContent = 'Clearing Data...';
+            
+            try {
+                const templatesCollection = collection(db, 'templates');
+                const querySnapshot = await getDocs(templatesCollection);
+                
+                let deleteCount = 0;
+                for (const docSnapshot of querySnapshot.docs) {
+                    await deleteDoc(doc(db, 'templates', docSnapshot.id));
+                    deleteCount++;
+                }
+                
+                status.innerHTML = `<div class="success">✅ Successfully deleted ${deleteCount} templates from Firestore!</div>`;
+                document.getElementById('templates').innerHTML = '';
+                
+            } catch (error) {
+                console.error('Error clearing data:', error);
+                status.innerHTML = '<div class="error">❌ Error clearing data: ' + error.message + '</div>';
+            }
+            
+            clearBtn.disabled = false;
+            clearBtn.textContent = 'Clear All Templates';
+        };
+
+        // Check current data
+        window.checkData = async () => {
+            const checkBtn = document.getElementById('checkBtn');
+            const status = document.getElementById('status');
+            const templatesDiv = document.getElementById('templates');
+            
+            checkBtn.disabled = true;
+            checkBtn.textContent = 'Checking Data...';
+            
+            try {
+                const templatesCollection = collection(db, 'templates');
+                const q = query(templatesCollection, orderBy('createdAt', 'desc'));
+                const querySnapshot = await getDocs(q);
+                
+                const templates = [];
+                querySnapshot.forEach((doc) => {
+                    templates.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                
+                if (templates.length === 0) {
+                    status.innerHTML = '<div class="info">📋 No templates found in Firestore. Click "Add Sample Templates" to add some.</div>';
+                    templatesDiv.innerHTML = '';
+                } else {
+                    status.innerHTML = `<div class="success">✅ Found ${templates.length} templates in Firestore!</div>`;
+                    
+                    // Display templates
+                    templatesDiv.innerHTML = templates.map(template => `
+                        <div class="template-card">
+                            <h4>${template.name}</h4>
+                            <p class="price">$${template.price}</p>
+                            <p><strong>Category:</strong> ${template.category}</p>
+                            <p><strong>Rating:</strong> ${template.rating}/5 (${template.reviews} reviews)</p>
+                            <p><strong>Tags:</strong> ${template.tags?.join(', ')}</p>
+                            <p><strong>Features:</strong> ${template.features?.join(', ')}</p>
+                            <p><strong>ID:</strong> ${template.id}</p>
+                            <p style="color: #6b7280; font-size: 12px;"><strong>Created:</strong> ${template.createdAt?.toDate?.()?.toLocaleString() || 'N/A'}</p>
+                        </div>
+                    `).join('');
+                }
+                
+            } catch (error) {
+                console.error('Error checking data:', error);
+                status.innerHTML = '<div class="error">❌ Error checking data: ' + error.message + '</div>';
+            }
+            
+            checkBtn.disabled = false;
+            checkBtn.textContent = 'Check Current Data';
+        };
+
+        // Auto-check data on page load
+        window.addEventListener('load', () => {
+            checkData();
+        });
+    </script>
+</body>
+</html>

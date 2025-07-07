@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildFlow Favicon Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Inter, sans-serif;
+            background: #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .favicon-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .favicon-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        canvas {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        
+        .download-btn {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .download-btn:hover {
+            opacity: 0.9;
+        }
+        
+        h1 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+        
+        .instructions {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>BuildFlow Professional Favicon Generator</h1>
+    
+    <div class="favicon-container">
+        <div class="favicon-preview">
+            <h3>16x16 (ICO)</h3>
+            <canvas id="favicon16" width="16" height="16"></canvas>
+            <br>
+            <button class="download-btn" onclick="downloadFavicon('favicon16', 'favicon-16x16.png')">Download 16x16</button>
+        </div>
+        
+        <div class="favicon-preview">
+            <h3>32x32 (Standard)</h3>
+            <canvas id="favicon32" width="32" height="32"></canvas>
+            <br>
+            <button class="download-btn" onclick="downloadFavicon('favicon32', 'favicon-32x32.png')">Download 32x32</button>
+        </div>
+        
+        <div class="favicon-preview">
+            <h3>64x64 (High DPI)</h3>
+            <canvas id="favicon64" width="64" height="64"></canvas>
+            <br>
+            <button class="download-btn" onclick="downloadFavicon('favicon64', 'favicon-64x64.png')">Download 64x64</button>
+        </div>
+        
+        <div class="favicon-preview">
+            <h3>180x180 (Apple Touch)</h3>
+            <canvas id="favicon180" width="180" height="180"></canvas>
+            <br>
+            <button class="download-btn" onclick="downloadFavicon('favicon180', 'apple-touch-icon.png')">Download 180x180</button>
+        </div>
+    </div>
+    
+    <div class="instructions">
+        <h3>How to use:</h3>
+        <ol>
+            <li>Download the generated favicon files above</li>
+            <li>Replace the existing favicon files in your /public folder</li>
+            <li>Update your HTML <code>&lt;link&gt;</code> tags if needed</li>
+            <li>Clear browser cache to see the new favicon</li>
+        </ol>
+        <p><strong>Files you'll need:</strong></p>
+        <ul>
+            <li><code>favicon-16x16.png</code> - Standard favicon</li>
+            <li><code>favicon-32x32.png</code> - High resolution favicon</li>
+            <li><code>apple-touch-icon.png</code> - iOS home screen icon</li>
+        </ul>
+    </div>
+
+    <script>
+        function createFavicon(canvas, size) {
+            const ctx = canvas.getContext('2d');
+            const centerX = size / 2;
+            const centerY = size / 2;
+            
+            // Create gradient background
+            const bgGradient = ctx.createLinearGradient(0, 0, size, size);
+            bgGradient.addColorStop(0, '#0f172a');
+            bgGradient.addColorStop(0.3, '#1e3a8a');
+            bgGradient.addColorStop(0.7, '#3b82f6');
+            bgGradient.addColorStop(1, '#60a5fa');
+            
+            // Draw background with rounded corners
+            const radius = size * 0.15;
+            ctx.fillStyle = bgGradient;
+            roundRect(ctx, 0, 0, size, size, radius);
+            ctx.fill();
+            
+            // Draw flow waves
+            const flowGradient = ctx.createLinearGradient(0, 0, size, size);
+            flowGradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+            flowGradient.addColorStop(0.5, 'rgba(224, 231, 255, 0.8)');
+            flowGradient.addColorStop(1, 'rgba(199, 210, 254, 0.7)');
+            
+            ctx.fillStyle = flowGradient;
+            
+            // Scale flow pattern based on size
+            const scale = size / 64;
+            const waveHeight = 8 * scale;
+            const waveSpacing = 12 * scale;
+            
+            // Draw multiple flow waves
+            for (let i = 0; i < 3; i++) {
+                const y = centerY - waveSpacing + (i * waveSpacing);
+                const opacity = 0.9 - (i * 0.2);
+                
+                ctx.globalAlpha = opacity;
+                drawFlowWave(ctx, size * 0.2, y, size * 0.6, waveHeight);
+            }
+            
+            // Draw center accent
+            ctx.globalAlpha = 0.9;
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, size * 0.08, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = '#60a5fa';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, size * 0.04, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.globalAlpha = 1;
+        }
+        
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+        
+        function drawFlowWave(ctx, x, y, width, height) {
+            const segments = 4;
+            const segmentWidth = width / segments;
+            
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            
+            for (let i = 0; i < segments; i++) {
+                const x1 = x + (i * segmentWidth);
+                const x2 = x + ((i + 1) * segmentWidth);
+                const controlY = y + (i % 2 === 0 ? -height : height);
+                
+                ctx.quadraticCurveTo(x1 + segmentWidth/2, controlY, x2, y);
+            }
+            
+            // Create wave shape
+            for (let i = segments - 1; i >= 0; i--) {
+                const x1 = x + (i * segmentWidth);
+                const x2 = x + ((i + 1) * segmentWidth);
+                const controlY = y + (i % 2 === 0 ? height/2 : -height/2);
+                
+                ctx.quadraticCurveTo(x1 + segmentWidth/2, controlY, x1, y);
+            }
+            
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        function downloadFavicon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Generate all favicons on page load
+        window.onload = function() {
+            createFavicon(document.getElementById('favicon16'), 16);
+            createFavicon(document.getElementById('favicon32'), 32);
+            createFavicon(document.getElementById('favicon64'), 64);
+            createFavicon(document.getElementById('favicon180'), 180);
+        };
+    </script>
+</body>
+</html>

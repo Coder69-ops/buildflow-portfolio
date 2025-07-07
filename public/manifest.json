@@ -1,0 +1,67 @@
+{
+  "name": "BuildFlow - Building Digital Experiences That Flow",
+  "short_name": "BuildFlow",
+  "description": "Professional web development and ready-made website marketplace. Transform your vision into a powerful online presence.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#1e3a8a",
+  "background_color": "#0f172a",
+  "categories": ["productivity", "business", "developer"],
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-64x64.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Templates",
+      "short_name": "Templates",
+      "description": "Browse ready-made website templates",
+      "url": "/templates",
+      "icons": [{ "src": "/favicon-32x32.png", "sizes": "32x32" }]
+    },
+    {
+      "name": "Services",
+      "short_name": "Services",
+      "description": "Custom web development services",
+      "url": "/services",
+      "icons": [{ "src": "/favicon-32x32.png", "sizes": "32x32" }]
+    },
+    {
+      "name": "Portfolio",
+      "short_name": "Portfolio",
+      "description": "View our project portfolio",
+      "url": "/portfolio",
+      "icons": [{ "src": "/favicon-32x32.png", "sizes": "32x32" }]
+    }
+  ]
+}

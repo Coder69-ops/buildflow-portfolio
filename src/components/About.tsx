@@ -29,7 +29,7 @@ const TestimonialCard: React.FC<TestimonialProps> = ({
   rating 
 }) => {
   return (
-    <div className="group relative overflow-hidden bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border border-gray-200/60 dark:border-gray-700/60 rounded-xl shadow-lg dark:shadow-cyan-500/20 hover:shadow-2xl dark:hover:shadow-cyan-500/40 transition-all duration-500 p-8 hover:-translate-y-2 hover:scale-[1.02]">
+    <div className="group relative overflow-hidden bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border border-gray-200/60 dark:border-gray-700/60 rounded-xl shadow-lg dark:shadow-cyan-500/20 hover:shadow-2xl dark:hover:shadow-cyan-500/40 transition-all duration-500 p-6 sm:p-8 hover:-translate-y-2 hover:scale-[1.02]">
       {/* Glass morphism background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-white/20 to-accent-50/50 dark:from-gray-800/50 dark:via-gray-700/20 dark:to-gray-800/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       
@@ -37,13 +37,13 @@ const TestimonialCard: React.FC<TestimonialProps> = ({
       <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-primary-200/30 to-transparent dark:via-blue-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       
       {/* Quote and rating */}
-      <div className="relative z-10 flex items-center justify-between mb-6">
-        <Quote className="w-10 h-10 text-primary-600 dark:text-blue-400 group-hover:text-accent-600 dark:group-hover:text-purple-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12" />
+      <div className="relative z-10 flex items-center justify-between mb-4 sm:mb-6">
+        <Quote className="w-8 h-8 sm:w-10 sm:h-10 text-primary-600 dark:text-blue-400 group-hover:text-accent-600 dark:group-hover:text-purple-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12" />
         <div className="flex gap-1">
           {[...Array(rating)].map((_, i) => (
             <Star 
               key={i} 
-              className="w-5 h-5 fill-yellow-400 text-yellow-400 group-hover:scale-125 transition-transform duration-300" 
+              className="w-4 h-4 sm:w-5 sm:h-5 fill-yellow-400 text-yellow-400 group-hover:scale-125 transition-transform duration-300" 
               style={{ transitionDelay: `${i * 100}ms` }} 
             />
           ))}
@@ -51,7 +51,7 @@ const TestimonialCard: React.FC<TestimonialProps> = ({
       </div>
       
       {/* Content */}
-      <p className="relative z-10 text-gray-600 dark:text-gray-300 mb-8 italic leading-relaxed text-lg group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
+      <p className="relative z-10 text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 italic leading-relaxed text-base sm:text-lg group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
         "{content}"
       </p>
       
@@ -61,16 +61,16 @@ const TestimonialCard: React.FC<TestimonialProps> = ({
           <img 
             src={avatar} 
             alt={name}
-            className="w-14 h-14 rounded-full mr-4 ring-2 ring-primary-100 dark:ring-gray-600 group-hover:ring-primary-300 dark:group-hover:ring-blue-400 transition-all duration-300 group-hover:scale-110"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full mr-3 sm:mr-4 ring-2 ring-primary-100 dark:ring-gray-600 group-hover:ring-primary-300 dark:group-hover:ring-blue-400 transition-all duration-300 group-hover:scale-110"
           />
-          <div className="absolute inset-0 w-14 h-14 rounded-full bg-gradient-to-r from-primary-400/20 to-accent-400/20 dark:from-blue-400/30 dark:to-purple-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-primary-400/20 to-accent-400/20 dark:from-blue-400/30 dark:to-purple-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           
           {/* Pulse ring */}
-          <div className="absolute inset-0 w-14 h-14 rounded-full border-2 border-primary-300/50 dark:border-blue-400/50 opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500 animate-pulse"></div>
+          <div className="absolute inset-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-primary-300/50 dark:border-blue-400/50 opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500 animate-pulse"></div>
         </div>
-        <div>
-          <h4 className="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-700 dark:group-hover:text-blue-300 transition-colors duration-300 text-lg">{name}</h4>
-          <p className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">{position} at {company}</p>
+        <div className="flex-1 min-w-0">
+          <h4 className="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-700 dark:group-hover:text-blue-300 transition-colors duration-300 text-base sm:text-lg truncate">{name}</h4>
+          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300 truncate">{position} at {company}</p>
         </div>
       </div>
       
@@ -227,35 +227,36 @@ const About: React.FC = () => {
       
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         {/* Enhanced header */}
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-full px-6 py-2 mb-6 shadow-lg dark:shadow-cyan-500/20">
-            <Sparkles className="w-5 h-5 text-primary-600 dark:text-blue-400" />
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">About BuildFlow</span>
+        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+          <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-full px-4 sm:px-6 py-2 mb-4 sm:mb-6 shadow-lg dark:shadow-cyan-500/20">
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-blue-400" />
+            <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">About BuildFlow</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-animated dark:text-gradient-animated-dark mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-animated dark:text-gradient-animated-dark mb-4 sm:mb-6 px-2">
             Crafting Digital Excellence
           </h2>
-          <p className="text-xl md:text-2xl text-gray-600 dark:text-slate-400 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-slate-400 max-w-4xl mx-auto leading-relaxed px-2">
             We're passionate about creating exceptional digital experiences 
             that drive business growth and user engagement through seamless flows.
           </p>
         </div>
 
         {/* Enhanced Bio Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
-          <div className="group relative">
-            <div className="relative overflow-hidden rounded-3xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center mb-16 sm:mb-20 lg:mb-24">
+          <div className="group relative order-2 lg:order-1">
+            <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl dark:shadow-cyan-500/30">
               {/* Enhanced image with multiple effects */}
               <img 
                 src="https://ik.imagekit.io/nltb2bcz4/founder.jpg?updatedAt=1750125627342" 
                 alt="Professional headshot of the developer" 
-                className="w-full h-auto object-cover transition-all duration-700 group-hover:scale-110"
+                className="w-full h-auto object-cover object-center transition-all duration-700 group-hover:scale-110 max-w-full"
                 loading="eager"
                 decoding="async"
                 width="600"
                 height="700"
                 fetchPriority="high"
+                style={{ aspectRatio: 'auto' }}
               />
               
               {/* Enhanced gradient overlay with animation */}
@@ -295,17 +296,17 @@ const About: React.FC = () => {
             </div>
           </div>
           
-          <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-full px-4 py-2 shadow-lg dark:shadow-cyan-500/20">
+          <div className="space-y-6 sm:space-y-8 order-1 lg:order-2 text-center lg:text-left px-4 sm:px-0">
+            <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-full px-4 sm:px-6 py-2 shadow-lg dark:shadow-cyan-500/20 mx-auto lg:mx-0">
               <Zap className="w-4 h-4 text-accent-600 dark:text-purple-400" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Our Story</span>
+              <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Our Story</span>
             </div>
             
-            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gradient-animated dark:text-gradient-animated-dark leading-tight">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gradient-animated dark:text-gradient-animated-dark leading-tight px-2 lg:px-0">
               Building Digital Flows Since 2019
             </h3>
             
-            <div className="space-y-6 text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+            <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
               <p className="hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-300">
                 At BuildFlow, we believe that great websites should flow naturally from concept to conversion. 
                 Our team combines technical expertise with design thinking to create digital experiences 
@@ -324,14 +325,14 @@ const About: React.FC = () => {
             </div>
             
             {/* Enhanced key benefits */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-6 sm:mt-8">
               {[
-                { icon: <Shield className="w-5 h-5" />, title: "Quality Assured", desc: "Rigorous testing & optimization" },
-                { icon: <Zap className="w-5 h-5" />, title: "Fast Delivery", desc: "Quick turnaround times" },
-                { icon: <Users className="w-5 h-5" />, title: "Client Focused", desc: "Your success is our priority" },
-                { icon: <Sparkles className="w-5 h-5" />, title: "Innovation", desc: "Cutting-edge solutions" }
+                { icon: <Shield className="w-4 h-4 sm:w-5 sm:h-5" />, title: "Quality Assured", desc: "Rigorous testing & optimization" },
+                { icon: <Zap className="w-4 h-4 sm:w-5 sm:h-5" />, title: "Fast Delivery", desc: "Quick turnaround times" },
+                { icon: <Users className="w-4 h-4 sm:w-5 sm:h-5" />, title: "Client Focused", desc: "Your success is our priority" },
+                { icon: <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />, title: "Innovation", desc: "Cutting-edge solutions" }
               ].map((benefit, index) => (
-                <div key={index} className="group flex items-center gap-3 p-4 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/40 dark:border-gray-700/40 rounded-xl hover:bg-white/80 dark:hover:bg-gray-800/80 hover:shadow-lg dark:hover:shadow-cyan-500/20 transition-all duration-300">
+                <div key={index} className="group flex items-center gap-3 p-3 sm:p-4 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/40 dark:border-gray-700/40 rounded-lg sm:rounded-xl hover:bg-white/80 dark:hover:bg-gray-800/80 hover:shadow-lg dark:hover:shadow-cyan-500/20 transition-all duration-300">
                   <div className="text-primary-600 dark:text-blue-400 group-hover:text-accent-600 dark:group-hover:text-purple-400 transition-colors duration-300">
                     {benefit.icon}
                   </div>
@@ -346,15 +347,15 @@ const About: React.FC = () => {
         </div>
 
         {/* Enhanced Stats Section */}
-        <div className="mb-24">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-full px-6 py-2 mb-6 shadow-lg dark:shadow-cyan-500/20">
-              <Award className="w-5 h-5 text-primary-600 dark:text-blue-400" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Our Impact</span>
+        <div className="mb-16 sm:mb-20 lg:mb-24">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-full px-4 sm:px-6 py-2 mb-4 sm:mb-6 shadow-lg dark:shadow-cyan-500/20">
+              <Award className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-blue-400" />
+              <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Our Impact</span>
             </div>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {stats.map((stat, index) => (
               <StatCard key={index} {...stat} />
             ))}
@@ -362,40 +363,40 @@ const About: React.FC = () => {
         </div>
 
         {/* Enhanced Skills Section with Client Partners */}
-        <div className="mb-24">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-full px-6 py-2 mb-6 shadow-lg dark:shadow-cyan-500/20">
-              <Sparkles className="w-5 h-5 text-accent-600 dark:text-purple-400" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Our Network</span>
+        <div className="mb-16 sm:mb-20 lg:mb-24">
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-full px-4 sm:px-6 py-2 mb-4 sm:mb-6 shadow-lg dark:shadow-cyan-500/20">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-accent-600 dark:text-purple-400" />
+              <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Our Network</span>
             </div>
             
-            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gradient-animated dark:text-gradient-animated-dark mb-6">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gradient-animated dark:text-gradient-animated-dark mb-4 sm:mb-6 px-2">
               Trusted Partners & Clients
             </h3>
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed px-4">
               Collaborating with industry leaders and innovative startups to deliver exceptional 
               digital solutions across various sectors and business scales.
             </p>
           </div>
           
           {/* Client/Partner Logos - Infinite Scrolling like Hero */}
-          <div className="mb-16 max-w-6xl mx-auto overflow-hidden">
-            <div className="text-center mb-8">
-              <h4 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-200 font-bold">
+          <div className="mb-12 sm:mb-16 max-w-6xl mx-auto overflow-hidden px-4">
+            <div className="text-center mb-6 sm:mb-8">
+              <h4 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-800 dark:text-gray-200 font-bold">
                 Companies We've Worked With
               </h4>
             </div>
             
             {/* Infinite Scrolling Container */}
             <div className="relative">
-              <div className="flex animate-scroll-infinite space-x-8">
+              <div className="flex animate-scroll-infinite space-x-4 sm:space-x-6 lg:space-x-8">
                 {/* First set of logos */}
                 {partnerLogos.map((logo, index) => (
-                  <div key={`first-${index}`} className="flex-shrink-0 w-20 md:w-24 h-20 md:h-24 bg-white/40 dark:bg-gray-800/40 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-2xl flex items-center justify-center hover:bg-white/60 dark:hover:bg-gray-700/60 hover:border-gray-300/80 dark:hover:border-gray-600/80 hover:shadow-xl dark:hover:shadow-cyan-500/30 hover:scale-110 transition-all duration-500 group">
+                  <div key={`first-${index}`} className="flex-shrink-0 w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 bg-white/40 dark:bg-gray-800/40 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-xl sm:rounded-2xl flex items-center justify-center hover:bg-white/60 dark:hover:bg-gray-700/60 hover:border-gray-300/80 dark:hover:border-gray-600/80 hover:shadow-xl dark:hover:shadow-cyan-500/30 hover:scale-110 transition-all duration-500 group">
                     <img 
                       src={logo}
                       alt={`Partner ${index + 1}`}
-                      className="w-16 md:w-20 h-8 md:h-10 object-contain hover:filter hover:grayscale transition-all duration-300"
+                      className="w-12 sm:w-16 md:w-20 h-6 sm:h-8 md:h-10 object-contain hover:filter hover:grayscale transition-all duration-300"
                     />
                   </div>
                 ))}
@@ -417,22 +418,22 @@ const About: React.FC = () => {
 
         {/* Enhanced Testimonials Section */}
         <div>
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-full px-6 py-2 mb-6 shadow-lg dark:shadow-cyan-500/20">
-              <Quote className="w-5 h-5 text-primary-600 dark:text-blue-400" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Client Testimonials</span>
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-full px-4 sm:px-6 py-2 mb-4 sm:mb-6 shadow-lg dark:shadow-cyan-500/20">
+              <Quote className="w-4 h-4 sm:w-5 sm:h-5 text-primary-600 dark:text-blue-400" />
+              <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Client Testimonials</span>
             </div>
             
-            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gradient-animated dark:text-gradient-animated-dark mb-6">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gradient-animated dark:text-gradient-animated-dark mb-4 sm:mb-6 px-2">
               What Our Clients Say
             </h3>
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed px-4">
               Don't just take our word for it - here's what some of our satisfied clients 
               have to say about working with BuildFlow.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 px-4 sm:px-0">
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}

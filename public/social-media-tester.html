@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Preview Tester</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: #f8fafc;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1e293b;
+            margin-bottom: 30px;
+        }
+        .preview-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .preview-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .preview-content {
+            padding: 16px;
+        }
+        .preview-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        .preview-description {
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        .preview-url {
+            color: #3b82f6;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .platform {
+            font-weight: 600;
+            color: #7c3aed;
+            margin-bottom: 10px;
+        }
+        .test-links {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        .test-links h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+        .test-link {
+            display: block;
+            background: #3b82f6;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin: 10px 0;
+            text-align: center;
+            font-weight: 500;
+        }
+        .test-link:hover {
+            background: #2563eb;
+        }
+        .instructions {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .steps {
+            background: #ecfdf5;
+            border: 1px solid #10b981;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .steps ol {
+            margin-left: 20px;
+        }
+        .steps li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 Social Media Preview Tester</h1>
+        
+        <div class="instructions">
+            <h3>⚠️ Important: Create Your Preview Image First!</h3>
+            <p>Before testing, you need to create a preview image (1200x630px) and save it as <code>buildflow-preview.jpg</code> in your public folder. Use the preview generator or create one manually.</p>
+        </div>
+
+        <div class="steps">
+            <h3>✅ Steps to Set Up Social Media Previews:</h3>
+            <ol>
+                <li><strong>Create Preview Image:</strong> Open <code>/preview-generator.html</code> in your browser and screenshot the preview box</li>
+                <li><strong>Save Image:</strong> Crop to 1200x630px and save as <code>buildflow-preview.jpg</code> in the <code>public</code> folder</li>
+                <li><strong>Deploy Your Site:</strong> Upload your changes to buildflow.aixplore.me</li>
+                <li><strong>Test Links:</strong> Use the testing tools below to verify your previews work</li>
+                <li><strong>Clear Cache:</strong> Social platforms cache previews, so changes may take time to appear</li>
+            </ol>
+        </div>
+
+        <h2>Preview Examples</h2>
+        
+        <!-- WhatsApp/Telegram Preview -->
+        <div class="platform">📱 WhatsApp / Telegram Style</div>
+        <div class="preview-card">
+            <div class="preview-image">Your Preview Image (1200x630)</div>
+            <div class="preview-content">
+                <div class="preview-title">BuildFlow - Building Digital Experiences That Flow</div>
+                <div class="preview-description">Professional web development and ready-made website marketplace. Transform your vision into a powerful online presence with modern design and seamless user flows.</div>
+                <div class="preview-url">buildflow.aixplore.me</div>
+            </div>
+        </div>
+
+        <!-- Facebook Preview -->
+        <div class="platform">📘 Facebook Style</div>
+        <div class="preview-card">
+            <div class="preview-image">Your Preview Image (1200x630)</div>
+            <div class="preview-content">
+                <div class="preview-url">BUILDFLOW.AIXPLORE.ME</div>
+                <div class="preview-title">BuildFlow - Building Digital Experiences That Flow</div>
+                <div class="preview-description">Professional web development and ready-made website marketplace. Transform your vision into a powerful online presence with modern design and seamless user flows that convert.</div>
+            </div>
+        </div>
+
+        <!-- Twitter Preview -->
+        <div class="platform">🐦 Twitter Style</div>
+        <div class="preview-card">
+            <div class="preview-image">Your Preview Image (1200x630)</div>
+            <div class="preview-content">
+                <div class="preview-title">BuildFlow - Building Digital Experiences That Flow</div>
+                <div class="preview-description">Professional web development and ready-made website marketplace. Transform your vision into a powerful online presence with modern design and seamless user flows.</div>
+                <div class="preview-url">🔗 buildflow.aixplore.me</div>
+            </div>
+        </div>
+
+        <div class="test-links">
+            <h3>🧪 Test Your Links</h3>
+            <p>Use these tools to test how your link will appear when shared:</p>
+            
+            <a href="https://developers.facebook.com/tools/debug/" target="_blank" class="test-link">
+                Facebook Sharing Debugger
+            </a>
+            
+            <a href="https://cards-dev.twitter.com/validator" target="_blank" class="test-link">
+                Twitter Card Validator
+            </a>
+            
+            <a href="https://www.linkedin.com/post-inspector/" target="_blank" class="test-link">
+                LinkedIn Post Inspector
+            </a>
+            
+            <a href="https://developers.google.com/search/docs/appearance/structured-data" target="_blank" class="test-link">
+                Google Rich Results Test
+            </a>
+        </div>
+
+        <div class="instructions">
+            <h3>🔄 Cache Issues?</h3>
+            <p>If your preview doesn't update immediately:</p>
+            <ul>
+                <li>Wait 24-48 hours for cache to clear</li>
+                <li>Use Facebook Debugger to force refresh</li>
+                <li>Add a query parameter like <code>?v=1</code> to your URL</li>
+                <li>Make sure your image is publicly accessible</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

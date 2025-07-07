@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildFlow Debug - Loading Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-panel {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status-ok { color: #22c55e; }
+        .status-error { color: #ef4444; }
+        .status-warning { color: #f59e0b; }
+        .test-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-btn:hover {
+            background: #2563eb;
+        }
+        .log-item {
+            padding: 8px;
+            margin: 4px 0;
+            border-left: 4px solid #e5e7eb;
+            background: #f9fafb;
+        }
+        .log-error { border-left-color: #ef4444; background: #fef2f2; }
+        .log-success { border-left-color: #22c55e; background: #f0fdf4; }
+        .log-warning { border-left-color: #f59e0b; background: #fffbeb; }
+    </style>
+</head>
+<body>
+    <h1>🔧 BuildFlow Debug Panel</h1>
+    
+    <div class="debug-panel">
+        <h2>Current Status</h2>
+        <div id="status-container">
+            <div class="status-ok">✅ Debug panel loaded successfully</div>
+            <div id="js-status" class="status-warning">⏳ JavaScript loading test...</div>
+            <div id="css-status" class="status-warning">⏳ CSS loading test...</div>
+            <div id="network-status" class="status-warning">⏳ Network test...</div>
+        </div>
+    </div>
+
+    <div class="debug-panel">
+        <h2>Test Actions</h2>
+        <button class="test-btn" onclick="testMainApp()">🚀 Test Main App</button>
+        <button class="test-btn" onclick="testAssets()">📦 Test Assets</button>
+        <button class="test-btn" onclick="clearCache()">🗑️ Clear Cache</button>
+        <button class="test-btn" onclick="testNetworking()">🌐 Test Network</button>
+    </div>
+
+    <div class="debug-panel">
+        <h2>Console Log</h2>
+        <div id="console-log">
+            <div class="log-item log-success">Debug panel initialized at {{ timestamp }}</div>
+        </div>
+    </div>
+
+    <div class="debug-panel">
+        <h2>Browser Information</h2>
+        <div id="browser-info">
+            <p><strong>User Agent:</strong> <span id="user-agent"></span></p>
+            <p><strong>URL:</strong> <span id="current-url"></span></p>
+            <p><strong>Referrer:</strong> <span id="referrer"></span></p>
+            <p><strong>Cache Status:</strong> <span id="cache-status"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize debug panel
+        function log(message, type = 'info') {
+            const logContainer = document.getElementById('console-log');
+            const logItem = document.createElement('div');
+            logItem.className = `log-item log-${type}`;
+            logItem.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logContainer.appendChild(logItem);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        function updateStatus(elementId, message, type = 'ok') {
+            const element = document.getElementById(elementId);
+            element.className = `status-${type}`;
+            element.textContent = type === 'ok' ? `✅ ${message}` : 
+                                type === 'error' ? `❌ ${message}` : 
+                                `⚠️ ${message}`;
+        }
+
+        // Test main app
+        function testMainApp() {
+            log('Testing main application...', 'info');
+            try {
+                // Try to load main app
+                const iframe = document.createElement('iframe');
+                iframe.src = '/';
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+                
+                iframe.onload = function() {
+                    log('Main app loaded successfully', 'success');
+                    document.body.removeChild(iframe);
+                };
+                
+                iframe.onerror = function() {
+                    log('Main app failed to load', 'error');
+                    document.body.removeChild(iframe);
+                };
+                
+                // Timeout after 10 seconds
+                setTimeout(() => {
+                    if (document.body.contains(iframe)) {
+                        log('Main app load timeout', 'warning');
+                        document.body.removeChild(iframe);
+                    }
+                }, 10000);
+            } catch (error) {
+                log(`Main app test error: ${error.message}`, 'error');
+            }
+        }
+
+        // Test assets
+        function testAssets() {
+            log('Testing asset loading...', 'info');
+            
+            // Test CSS
+            const css = document.createElement('link');
+            css.rel = 'stylesheet';
+            css.href = '/assets/index-BF3ZS18Y.css';
+            css.onload = () => {
+                log('CSS assets loaded successfully', 'success');
+                updateStatus('css-status', 'CSS loading OK', 'ok');
+            };
+            css.onerror = () => {
+                log('CSS assets failed to load', 'error');
+                updateStatus('css-status', 'CSS loading failed', 'error');
+            };
+            document.head.appendChild(css);
+            
+            // Test JS
+            const js = document.createElement('script');
+            js.src = '/assets/index-DgGer2IU.js';
+            js.onload = () => {
+                log('JS assets loaded successfully', 'success');
+                updateStatus('js-status', 'JavaScript loading OK', 'ok');
+            };
+            js.onerror = () => {
+                log('JS assets failed to load', 'error');
+                updateStatus('js-status', 'JavaScript loading failed', 'error');
+            };
+            document.head.appendChild(js);
+        }
+
+        // Clear cache
+        function clearCache() {
+            log('Clearing cache...', 'info');
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => {
+                        caches.delete(name);
+                    });
+                    log('Service worker cache cleared', 'success');
+                });
+            }
+            
+            // Clear localStorage
+            localStorage.clear();
+            log('localStorage cleared', 'success');
+            
+            // Clear sessionStorage
+            sessionStorage.clear();
+            log('sessionStorage cleared', 'success');
+            
+            // Suggest hard refresh
+            setTimeout(() => {
+                if (confirm('Cache cleared. Would you like to perform a hard refresh?')) {
+                    window.location.reload(true);
+                }
+            }, 1000);
+        }
+
+        // Test networking
+        function testNetworking() {
+            log('Testing network connectivity...', 'info');
+            
+            fetch('/')
+                .then(response => {
+                    if (response.ok) {
+                        log('Network test successful', 'success');
+                        updateStatus('network-status', 'Network OK', 'ok');
+                    } else {
+                        log(`Network test failed: ${response.status}`, 'error');
+                        updateStatus('network-status', `Network error: ${response.status}`, 'error');
+                    }
+                })
+                .catch(error => {
+                    log(`Network test error: ${error.message}`, 'error');
+                    updateStatus('network-status', 'Network failed', 'error');
+                });
+        }
+
+        // Initialize browser info
+        function initBrowserInfo() {
+            document.getElementById('user-agent').textContent = navigator.userAgent;
+            document.getElementById('current-url').textContent = window.location.href;
+            document.getElementById('referrer').textContent = document.referrer || 'None';
+            document.getElementById('cache-status').textContent = 'caches' in window ? 'Supported' : 'Not supported';
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            initBrowserInfo();
+            
+            // Auto-run initial tests
+            setTimeout(() => {
+                updateStatus('js-status', 'JavaScript working', 'ok');
+                log('JavaScript execution confirmed', 'success');
+            }, 100);
+            
+            // Replace timestamp placeholder
+            const timestamp = new Date().toLocaleString();
+            document.body.innerHTML = document.body.innerHTML.replace('{{ timestamp }}', timestamp);
+        });
+
+        // Monitor console errors
+        window.addEventListener('error', function(event) {
+            log(`Global error: ${event.message} at ${event.filename}:${event.lineno}`, 'error');
+        });
+
+        // Monitor unhandled promise rejections
+        window.addEventListener('unhandledrejection', function(event) {
+            log(`Unhandled promise rejection: ${event.reason}`, 'error');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Professional gradient background -->
+    <linearGradient id="bgGradient64" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Flow gradient -->
+    <linearGradient id="flowGradient64" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e0e7ff;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#c7d2fe;stop-opacity:0.8" />
+    </linearGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background with rounded corners -->
+  <rect width="64" height="64" rx="12" fill="url(#bgGradient64)"/>
+  
+  <!-- Flow pattern - more detailed for 64x64 -->
+  <path d="M16 20 Q24 12 32 20 Q40 28 48 20 Q40 32 32 28 Q24 32 16 28 Z" 
+        fill="url(#flowGradient64)" opacity="0.9" filter="url(#glow)"/>
+  <path d="M16 32 Q24 24 32 32 Q40 40 48 32 Q40 44 32 40 Q24 44 16 40 Z" 
+        fill="url(#flowGradient64)" opacity="0.7" filter="url(#glow)"/>
+  <path d="M16 44 Q24 36 32 44 Q40 52 48 44 Q40 56 32 52 Q24 56 16 52 Z" 
+        fill="url(#flowGradient64)" opacity="0.5" filter="url(#glow)"/>
+  
+  <!-- Central accent -->
+  <circle cx="32" cy="32" r="3" fill="#ffffff" opacity="0.9"/>
+  <circle cx="32" cy="32" r="1.5" fill="#60a5fa" opacity="1"/>
+</svg>

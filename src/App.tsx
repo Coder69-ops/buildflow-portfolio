@@ -1,81 +1,29 @@
-import { Suspense, lazy } from 'react'
-import Header from './components/Header'
-import Hero from './components/Hero'
 import { ThemeProvider } from './components/ui/theme-provider'
-import { SectionSkeleton } from './components/ui/skeleton'
-import { useIntersectionObserver } from './hooks/useIntersectionObserver'
-
-// Lazy load non-critical components for better initial performance
-const Portfolio = lazy(() => import('./components/Portfolio'))
-const WebsitesForSale = lazy(() => import('./components/WebsitesForSale'))
-const CustomizationServices = lazy(() => import('./components/CustomizationServices'))
-const About = lazy(() => import('./components/About'))
-const Contact = lazy(() => import('./components/Contact'))
-const Footer = lazy(() => import('./components/Footer'))
-
-// Component wrapper that loads content when visible
-const LazySection: React.FC<{ 
-  children: React.ReactNode
-  fallback?: React.ReactNode
-}> = ({ children, fallback = <SectionSkeleton /> }) => {
-  const { targetRef, isIntersecting } = useIntersectionObserver({
-    threshold: 0.1,
-    rootMargin: '100px'
-  })
-
-  return (
-    <div ref={targetRef}>
-      {isIntersecting ? (
-        <Suspense fallback={fallback}>
-          {children}
-        </Suspense>
-      ) : (
-        fallback
-      )}
-    </div>
-  )
-}
-
-function AppContent() {
-  return (
-    <div className="min-h-screen">
-      <Header />
-      <main id="main-content" role="main">
-        <Hero />
-        
-        <LazySection>
-          <Portfolio />
-        </LazySection>
-        
-        <LazySection>
-          <WebsitesForSale />
-        </LazySection>
-        
-        <LazySection>
-          <CustomizationServices />
-        </LazySection>
-        
-        <LazySection>
-          <About />
-        </LazySection>
-        
-        <LazySection>
-          <Contact />
-        </LazySection>
-        
-        <LazySection>
-          <Footer />
-        </LazySection>
-      </main>
-    </div>
-  )
-}
+import { AuthProvider } from './contexts/AuthContext'
+import { AuthUIProvider } from './contexts/AuthUIContext'
+import { NotificationProvider } from './contexts/NotificationContext'
+import { AppRouter } from './router/AppRouter'
+import { usePerformanceOptimization, useImageOptimization, useAnimationOptimization } from './hooks/usePerformanceOptimization'
+import ErrorBoundary from './components/ErrorBoundary'
 
 function App() {
+  // Initialize performance optimizations
+  usePerformanceOptimization()
+  useImageOptimization()
+  useAnimationOptimization()
+
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="buildflow-ui-theme">
-      <AppContent />
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <AuthProvider>
+          <AuthUIProvider>
+            <NotificationProvider>
+              <AppRouter />
+            </NotificationProvider>
+          </AuthUIProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   )
 }
 

@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Allow major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Sitemap
+Sitemap: https://buildflow.aixplore.me/sitemap.xml
+
+# Crawl-delay for all bots
+Crawl-delay: 1
